@@ -1,0 +1,21 @@
+{
+  "name": "RTU2024",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "user": "mocha 'tests/scenarios/user/crud.js' --reporter mochawesome --timeout 20000"
+  },
+  "author": "Aleksejs Levenciks",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
+  },
+  "dependencies": {
+    "get-nested-value": "^1.0.3",
+    "mochawesome": "^6.2.0"
+  },
+  "type": "module"
+}
