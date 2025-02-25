@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "user": "mocha 'tests/scenarios/user/crud.js' --reporter mochawesome --timeout 20000"
+    "user": "mocha 'tests/scenarios/user/user.js' --reporter mochawesome --timeout 20000",
+    "post": "mocha 'tests/scenarios/post/post.js' --reporter mochawesome --timeout 20000"
   },
   "author": "Aleksejs Levenciks",
   "license": "ISC",

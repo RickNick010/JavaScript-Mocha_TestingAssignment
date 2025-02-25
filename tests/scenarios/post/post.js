@@ -5,8 +5,8 @@ before(async () => {
     await generateTestData()
 })
 
-describe('CRUD User', () => {
-    describe(`Create User`, () => {
+describe('User', () => {
+    describe(`CRUD Users`, () => {
         createUser(),
         deleteUser()
     })
