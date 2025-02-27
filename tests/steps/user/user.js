@@ -8,18 +8,23 @@ export async function createUser() {
             {
                 statusCode : 201,
                 expectedFields: ['email'],
+                expectedTypes:  [
+                                    {path: 'name', type: 'string'},
+                                    {path: 'id', type: 'number'}
+                                ],
                 expectedValues: [
                                     {path: 'name', value: requestBody.name},
                                     {path: 'gender', value: requestBody.gender},
                                     {path: 'status', value: requestBody.status}
                                 ],
-                executionVariables: [
-                                        {path: 'id', name: 'userId'}, 
-                                        {path: 'name', name: 'userName'}, 
-                                        {path: 'email', name: 'userEmail'},
-                                        {path: 'gender', name: 'userGender'},
-                                        {path: 'status', name: 'userStatus'} 
-                                    ]
+                executionVariables: 
+                                [
+                                    {path: 'id', name: 'userId'}, 
+                                    {path: 'name', name: 'userName'}, 
+                                    {path: 'email', name: 'userEmail'},
+                                    {path: 'gender', name: 'userGender'},
+                                    {path: 'status', name: 'userStatus'} 
+                                ]
             }
         )
     })

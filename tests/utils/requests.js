@@ -80,6 +80,9 @@ async function performAssertion(
             if (asserts.executionVariables) {
                 await setExecutionVariables(responseBody, asserts.executionVariables)
             }
+            if (asserts.expectedTypes) {
+                await validateExpectedTypes(responseBody, asserts.expectedTypes, context, method, path, headers, response, body)
+            }
 
             addRequestInfoToReport(context, method, path, headers, response, body)
     }
@@ -113,6 +116,19 @@ async function validateExpectedValues(body, fields, context, method, path, heade
             addRequestInfoToReport(context, method, path, headers, response, requestBody)
             const actual = getNestedValue(field.path, body)
             assert.fail(actual, field.value, `${field.path} expected value is ${field.value}, but actual was ${actual}`)
+        }
+    })
+}
+
+async function validateExpectedTypes(body, fields, context, method, path, headers, response, requestBody) {
+    fields.forEach(field => {
+        try {
+            expect(getNestedValue(field.path, body), 
+            `${field.path} data type is not ${field.type}`).to.be.a(field.type)
+        } catch (error) {
+            addRequestInfoToReport(context, method, path, headers, response, requestBody)
+            const actual = getNestedValue(field.path, body)
+            assert.fail(actual, field.type, `${field.path} data type is not ${field.type}, but actual was ${actual}`)
         }
     })
 }

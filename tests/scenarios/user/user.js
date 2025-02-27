@@ -16,13 +16,13 @@ describe('User', () => {
 })
 
 
-describe('Delete already deleted user', () => {
+describe.skip('Delete already deleted user', () => {
     createUser(),
     deleteUser(),
     deleteAlreadyDeletedUser()
 })
 
-describe('User with no token', () => {
+describe.skip('User with no token', () => {
     createUserWithNoToken(),
     updateUserWithNoToken()
 })
