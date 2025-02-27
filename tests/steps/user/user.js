@@ -45,6 +45,34 @@ export async function createUserWithNoToken() {
     })
 }
 
+export async function createUserTodo() {
+    it('Create user todo', async function () {
+        const requestBody = await getCreateUserRequestBody()
+        await request(this, 'POST', `/users/${global.executionVariables['userId']}/todos`, requestBody, true, 
+            {
+                statusCode : 201,
+                expectedTypes:  [
+                                    {path: 'name', type: 'string'},
+                                    {path: 'id', type: 'number'}
+                                ],
+                expectedValues: [
+                                    {path: 'name', value: requestBody.name},
+                                    {path: 'gender', value: requestBody.gender},
+                                    {path: 'status', value: requestBody.status}
+                                ],
+                executionVariables: 
+                                [
+                                    {path: 'id', name: 'userId'}, 
+                                    {path: 'name', name: 'userName'}, 
+                                    {path: 'email', name: 'userEmail'},
+                                    {path: 'gender', name: 'userGender'},
+                                    {path: 'status', name: 'userStatus'} 
+                                ]
+            }
+        )
+    })
+}
+
 
 export async function updateUser() {
     it('Update user account', async function () {

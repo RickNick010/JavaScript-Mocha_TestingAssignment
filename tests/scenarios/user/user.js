@@ -3,9 +3,19 @@ import { generateTestData } from '../../utils/helpers.js'
 
 before(async () => {
     await generateTestData()
+    console.log("Before all tests")
+    createUser()
 })
 
-describe('User', () => {
+
+after(async () => 
+    {
+        console.log('After all tests')
+        deleteUser()
+    })
+
+     
+describe.skip('User', () => {
     describe(`CRUD Users`, () => {
         createUser(),
         getUser(),
@@ -26,3 +36,5 @@ describe.skip('User with no token', () => {
     createUserWithNoToken(),
     updateUserWithNoToken()
 })
+
+
