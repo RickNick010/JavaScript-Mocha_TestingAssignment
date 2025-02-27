@@ -52,42 +52,40 @@ export async function createUserPost() {
                                     {path: 'title', name: 'postTitle'}, 
                                     {path: 'body', name: 'postBody'}
                                 ],
-                expectedValues: [
+                expectedValues: [   
                                     {path: 'title', value: requestBody.title},
                                     {path: 'body', value: requestBody.body}
                                 ]
             }
         )
-
-        console.log(global.executionVariables['postTitle'])
-        console.log(global.executionVariables['postBody'])
     })
 }
 
+
 export async function getUserPost() {
     it('Get user post', async function () {
-        // const createdPost = global.executionVariables['createdPosts'].find(post => post.id === global.executionVariables['postId']);
-        await request(this, 'GET', `/users/${global.executionVariables['userId']}/posts`, undefined, true,
+        const response = await request(this, 'GET', `/posts/${global.executionVariables['postId']}`, undefined, true,
             {
                 statusCode: 200,
+                expectedFields: ['title', 'body', 'user_id', 'id'],
                 expectedTypes: [
-                    { path: 'id', type: 'undefined' },
-                    { path: 'user_id', type: 'undefined' },
-                    { path: 'title', type: 'undefined' },
-                    { path: 'body', type: 'undefined' }
-                ],
-                expectedValues: [
-                    { path: 'title', value: global.executionVariables['postTitle'] },
-                    { path: 'body', value: global.executionVariables['postBody'] }
-                ]
+                                { path: 'id', type: 'number' },
+                                { path: 'user_id', type: 'number' },
+                                { path: 'title', type: 'string' },
+                                { path: 'body', type: 'string' }
+                               ],
+                expectedValues: [   
+                                {path: 'title', value: global.executionVariables['postTitle']},
+                                {path: 'body', value: global.executionVariables['postBody']}
+                            ]
             }
-        )
+        );
     })
 }
 
 export async function deleteUserPost() {
     it('Delete user post', async function () {
-        await request(this, 'DELETE', `/users/${global.executionVariables['userId']}/posts/${global.executionVariables['postId']}`, undefined, true,
+        await request(this, 'DELETE', `/posts/${global.executionVariables['postId']}`, undefined, true,
             {
                 statusCode : 204
             }
@@ -96,8 +94,8 @@ export async function deleteUserPost() {
 }
 
 export async function deleteUser() {
-    it('Delete user account', async function () { // test name
-        await request(this, 'DELETE', `/users/${global.executionVariables['userId']}`, undefined, true,  //replaced requestBody with undefined beacause requestBody is not needed for delete request
+    it('Delete user account', async function () { 
+        await request(this, 'DELETE', `/users/${global.executionVariables['userId']}`, undefined, true,  
             {
                 statusCode : 204
             }

@@ -111,6 +111,8 @@ async function validateFieldsExists(body, fields, context, method, path, headers
 async function validateExpectedValues(body, fields, context, method, path, headers, response, requestBody) {
     fields.forEach(field => {
         try {
+            // console.log(getNestedValue(field.path, body))
+            console.log(field.value)
             expect(getNestedValue(field.path, body), `${field.path} not equal to ${field.value}`).to.be.equal(field.value)
         } catch (error) {
             addRequestInfoToReport(context, method, path, headers, response, requestBody)
