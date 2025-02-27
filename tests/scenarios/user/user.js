@@ -1,4 +1,4 @@
-import { createUser, deleteUser, getUser, updateUser } from '../../steps/user/user.js'
+import { createUser, deleteUser, getUser, updateUser, deleteAlreadyDeletedUser, createUserWithNoToken, updateUserWithNoToken } from '../../steps/user/user.js'
 import { generateTestData } from '../../utils/helpers.js'
 
 before(async () => {
@@ -15,3 +15,14 @@ describe('User', () => {
     })
 })
 
+
+describe('Delete already deleted user', () => {
+    createUser(),
+    deleteUser(),
+    deleteAlreadyDeletedUser()
+})
+
+describe('User with no token', () => {
+    createUserWithNoToken(),
+    updateUserWithNoToken()
+})
