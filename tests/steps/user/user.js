@@ -26,6 +26,21 @@ export async function createUser() {
 }
 
 
+export async function createUserWithNoToken() {
+    it('Create user account with no token', async function () {
+        const requestBody = await getCreateUserRequestBody()
+        await request(this, 'POST', '/users', requestBody, false, 
+            {
+                statusCode : 401,
+                expectedValues: [
+                    {path: 'message', value: 'Authentication failed'}
+                ]
+            }
+        )
+    })
+}
+
+
 export async function updateUser() {
     it('Update user account', async function () {
         const requestBody = await getCreateUserRequestBody()
@@ -41,6 +56,19 @@ export async function updateUser() {
                 executionVariables: [ 
                                         {path: 'email', name: 'userEmail'}   //updates user details and returns updated userEmail variable
                                     ]
+            }
+        )
+    })
+}
+export async function updateUserWithNoToken() {
+    it('Update user account with no token', async function () {
+        const requestBody = await getCreateUserRequestBody()
+        await request(this, 'PATCH', `/users/${global.executionVariables['userId']}`, requestBody, false, 
+            {
+                statusCode : 404,
+                expectedValues: [
+                    {path: 'message', value: 'Resource not found'}
+                ]
             }
         )
     })
@@ -68,6 +96,19 @@ export async function getUser() {
                     {path: 'status', value: global.executionVariables['userStatus']},
                     {path: 'email', value: global.executionVariables['userEmail']},
                     {path: 'id', value: global.executionVariables['userId']}
+                ]
+            }
+        )
+    })
+}
+
+export async function deleteAlreadyDeletedUser() {
+    it('Delete already deleted user account', async function () { // test name
+        await request(this, 'DELETE', `/users/${global.executionVariables['userId']}`, undefined, true,  //replaced requestBody with undefined beacause requestBody is not needed for delete request
+            {
+                statusCode : 404,
+                expectedValues: [
+                    {path: 'message', value: 'Resource not found'}
                 ]
             }
         )

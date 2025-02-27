@@ -109,6 +109,7 @@ export async function request(context, method, path, body = undefined, auth = tr
 
             if (asserts.expectedFields) {
                 await validateFieldsExists(responseBody, asserts.expectedFields, context, method, path, headers, response, body)
+                addRequestInfoToReport(context, method, path, headers, response, body)
             }
 
             if (asserts.expectedValues) {
@@ -133,6 +134,7 @@ async function validateStatusCode(actual, expected, context, method, path, heade
     try {
         expect(actual).to.be.equal(expected)
     } catch(error) {
+        addRequestInfoToReport(context, method, path, headers, response, requestBody)
         assert.fail(error.actual, error.expected, `Actual is ${error.actual}, but expected was ${error.expected}`)
     }
 }
@@ -142,6 +144,7 @@ async function validateFieldsExists(body, fields, context, method, path, headers
         try {
             expect(getNestedValue(field, body), `${field} present in body`).not.to.be.undefined
         } catch (error) {
+            addRequestInfoToReport(context, method, path, headers, response, requestBody)
             assert.fail(error.actual, error.expected, `${field} field is not present in body`)
         }
     })
@@ -152,6 +155,7 @@ async function validateExpectedValues(body, fields, context, method, path, heade
         try {
             expect(getNestedValue(field.path, body), `${field.path} not equal to ${field.value}`).to.be.equal(field.value)
         } catch (error) {
+            addRequestInfoToReport(context, method, path, headers, response, requestBody)
             const actual = getNestedValue(field.path, body)
             assert.fail(actual, field.value, `${field.path} expected value is ${field.value}, but actual was ${actual}`)
         }
@@ -164,7 +168,7 @@ async function setExecutionVariables(body, variables) {
     })
 }
 
-function addRequestInfoToReport(context, method, path, headers, response, body) {
+function  addRequestInfoToReport(context, method, path, headers, response, body) {
     addContext(context, `${method} ${path}`)
     addContext(context, {
         title: 'REQUEST HEADERS',
