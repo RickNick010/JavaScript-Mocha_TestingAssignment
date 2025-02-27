@@ -1,4 +1,4 @@
-import { createUser, deleteUser } from '../../steps/user/user.js'
+import { createUser, deleteUser, getUser, updateUser } from '../../steps/user/user.js'
 import { generateTestData } from '../../utils/helpers.js'
 
 before(async () => {
@@ -8,6 +8,9 @@ before(async () => {
 describe('User', () => {
     describe(`CRUD Users`, () => {
         createUser(),
+        getUser(),
+        updateUser(),
+        getUser(),
         deleteUser()
     })
 })
